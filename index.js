@@ -1,25 +1,29 @@
 $(document).ready(function() {
-  var imagesUrl = [];
-  var randomImage = '';
+  var wordsArray = [];
+  var randomWord = ''
 
-  function getRandomImage() {
+  function getRandomWord() {
     try {
-      $.ajax({
-        url: 'https://picsum.photos/v2/list?page=2&limit=100',
-        type: 'GET',
-        success: function(response) {
-          console.log(response)
-          response.forEach(element => imagesUrl.push(element.download_url));
-          randomImage = imagesUrl[Math.floor(Math.random() * imagesUrl.length)];
-          console.log(randomImage)
-          $("#randomImage").text(randomImage);
-          $('#randomImage').attr('src', randomImage);
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://random-words2.p.rapidapi.com/words?limit=32&lang=en&yypesOf=noun",
+        "method": "GET",
+        "headers": {
+          "x-rapidapi-host": "random-words2.p.rapidapi.com",
+          "x-rapidapi-key": "029d021b2amsh497d8f4d0f8a4d9p126da8jsn32e7b97413ba"
         }
-      })
+      }
+      
+      $.ajax(settings).done(function (response) {
+        wordsArray.push(response.words);
+        randomWord = wordsArray[0][Math.floor(Math.random() * wordsArray.length)];
+        $("#randomWord").text(randomWord);
+      });
     }
     catch(err) {
-      alert("err");
+        alert("err");
     }
   }
-  getRandomImage()
+  getRandomWord();
 });
