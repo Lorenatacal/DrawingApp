@@ -11,7 +11,7 @@ $(document).ready(function() {
         "method": "GET",
         "headers": {
           "x-rapidapi-host": "random-words2.p.rapidapi.com",
-          "x-rapidapi-key": "029d021b2amsh497d8f4d0f8a4d9p126da8jsn32e7b97413ba"
+          "x-rapidapi-key": "5b5400d749msh5736bd5c72a6b47p1b28a3jsn7139ce7a6909"
         }
       }
       
@@ -25,5 +25,12 @@ $(document).ready(function() {
         alert("err");
     }
   }
+
   getRandomWord();
+
+  $(".get-Word").on("click", function(event) {
+    event.preventDefault();
+      randomWord = wordsArray[0][Math.floor(Math.random() * 31)];
+      $("#randomWord").text(randomWord);
+  });
 });
