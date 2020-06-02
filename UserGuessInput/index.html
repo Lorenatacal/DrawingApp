@@ -8,12 +8,12 @@
         <div>
             <p id="lives" align="right"></p>
 
-            <div>
+            <form onsubmit="isCorrectGuess()" method="POST">
                 <h4>Enter your guess here</h4>
                 <input id="guess-entry" type="text" required>
-                <button id="submit-guess" onclick="isCorrectGuess()">Submit</button>
+                <input id="submit-guess" type="submit" value="Submit">
                 <p id="input-result"></p>
-            </div>
+            </form>
             <br>
             <h5>Your Previous Guesses</h5>
             <ul id="previous-guesses">
