@@ -2,11 +2,21 @@
 <html>
     <head>
         <script type="text/javascript" src="playerGuessInput.js"></script>
+        <script src="../Canvas/canvas.js"></script>
     </head>
 
     <body>
         <div>
             <p id="lives" align="right"></p>
+
+            <div>
+                <canvas id="canvas"></canvas>
+                <br />
+                <button id="erase">eraser</button>
+                <button id="pen">pen</button>
+                <button id="restart">restart</button>
+            </div>
+
             <div>
                 <h4>Enter your guess here</h4>
                 <input id="guess-entry" type="text" required>
