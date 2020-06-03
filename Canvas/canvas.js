@@ -1,4 +1,7 @@
 // canvas
+const Y_AXIS_COMPENSATION = - 15
+const X_AXIS_COMPENSATION = - 4
+
 window.addEventListener("load", () => {
     const canvas = document.querySelector("#canvas");
     const ctx = canvas.getContext("2d");
@@ -16,17 +19,18 @@ window.addEventListener("load", () => {
     }
     function draw(e) {
         if (!drawing) return;
-        ctx.lineWidth = 4;
-        ctx.lineCap = "round";
-        ctx.lineTo(e.clientX, e.clientY);
-        if (brush) {
+        if (brush) { // moved this up so that this could possibly also change stroke size when using the eraser?
             ctx.strokeStyle = "black"
         } else {
             ctx.strokeStyle = "white"
         }
+        ctx.lineWidth = 4;
+        ctx.lineCap = "round";
+        //  x and y compensation constants are added to make brush placement more accurate
+        ctx.lineTo(e.clientX + X_AXIS_COMPENSATION, e.clientY + Y_AXIS_COMPENSATION);
         ctx.stroke();
         ctx.beginPath();
-        ctx.moveTo(e.clientX, e.clientY)
+        ctx.moveTo(e.clientX + X_AXIS_COMPENSATION, e.clientY +  Y_AXIS_COMPENSATION);
     }
     function switchToErase() {
         brush = false;
