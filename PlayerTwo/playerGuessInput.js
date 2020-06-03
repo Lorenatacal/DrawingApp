@@ -2,7 +2,7 @@ const answer = "Cat"
 var lives = 5
 
 const isCorrectGuess = () => {
-    const userGuess = document.getElementById("guess-entry").value
+    const userGuess = String(document.getElementById("guess-entry").value)
     console.log(userGuess)
 
     if(lives == 0) {
@@ -12,7 +12,7 @@ const isCorrectGuess = () => {
 
     if (!userGuess) {
         document.getElementById("input-result").innerHTML = "Make sure you input a guess before pressing submit"
-    } else if(userGuess.toLowerCase() == answer.toLowerCase()) {
+    } else if((userGuess.toLowerCase()).includes(answer.toLowerCase())) {
         document.getElementById("input-result").innerHTML = "correct!"
         displayPreviousGuesses(userGuess)
     } else {
