@@ -37,4 +37,7 @@ body {
     margin-left: 35%;
     margin-top: 13%;
 }
+#canvas {
+  border: 2px solid black;
+}
 
