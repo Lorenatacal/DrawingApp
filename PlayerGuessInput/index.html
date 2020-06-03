@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" src="userInput.js"></script>
+        <script type="text/javascript" src="playerGuessInput.js"></script>
     </head>
 
     <body>
         <div>
             <p id="lives" align="right"></p>
-
-            <form onsubmit="isCorrectGuess()" method="POST">
+            <div>
                 <h4>Enter your guess here</h4>
                 <input id="guess-entry" type="text" required>
-                <input id="submit-guess" type="submit" value="Submit">
+                <button id="submit-guess" onclick="isCorrectGuess()">Submit</button>
                 <p id="input-result"></p>
-            </form>
+            </div>
+
             <br>
             <h5>Your Previous Guesses</h5>
             <ul id="previous-guesses">
