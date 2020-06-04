@@ -46,7 +46,7 @@ const displayPreviousGuesses = (lastGuess) => {
 
 
 const sendGuess = (guess) => {
-    connection.send(`${FROM_CLIENT}${guess}`)
+    connection.send(`${INCOMING_GUESS}${guess}`)
 }
 
 
@@ -56,12 +56,12 @@ const displayLivesRemaining = () => {
 
 
 //  web socket connection
-const url = "ws://localhost:8080";
+const url = "wss://i788c.sse.codesandbox.io/";
 const connection = new WebSocket(url); // create a new websocket connection to port 8080
-const FROM_CLIENT = "FROM CLIENT: "; // put this at the beginning of the message
+const INCOMING_GUESS = "INCOMING GUESS: "; // put this at the beginning of the message
 
 connection.onopen = () => { // when the connection to port 8080 is made
-    console.log("connected"); // testing message
+    console.log("player two connected"); // testing message
     connection.send("hello");
 }
 
@@ -70,7 +70,8 @@ connection.onerror = err => { // if the connection has an error
 }
 
 connection.onmessage = e => { // if this connection recieves a message from the server
-    displayPreviousGuesses(e.data); // display the guess recieved from the server
+    console.log(e.data)
+    displayPreviousGuesses(String(e.data).replace(INCOMING_GUESS, ""))
 }
 
 
