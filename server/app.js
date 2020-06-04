@@ -14,9 +14,11 @@ const FROM_SERVER = "TO CLIENT: ";
 
 wss.on("connection", function connection(ws) {
     ws.on("message", function incomingGuess(guess) {
+        console.log(guess)
         wss.clients.forEach((client) => {
             if (client.readyState == WebSocket.OPEN) {
                 if (guess.startsWith(FROM_CLIENT)) {
+                    console.log("sending message to others");
                     const guessAccepted = guess.replace(FROM_CLIENT, "");
                     client.send(guessAccepted);
                 }
@@ -26,12 +28,12 @@ wss.on("connection", function connection(ws) {
     })
 })
 
-app.ws("/", function(ws, req) {
-  ws.on("message", function(msg) {
-    console.log(msg);
-  });
-  console.log("socket", req.testing);
-});
+// app.ws("/", function(ws, req) {
+//   ws.on("message", function(msg) {
+//     console.log(msg);
+//   });
+//   console.log("socket", req.testing);
+// });
 
 app.listen(3000);
 

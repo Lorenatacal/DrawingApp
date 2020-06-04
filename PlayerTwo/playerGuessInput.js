@@ -3,8 +3,6 @@ var lives = 5;
 
 
 const isCorrectGuess = () => {
-
-
     // validation
     const userGuess = String(document.getElementById("guess-entry").value);
     console.log(userGuess);
@@ -13,7 +11,6 @@ const isCorrectGuess = () => {
 
         alert("You've run out of lives :(");
         return;
-
     }
 
     if (!userGuess) {
@@ -25,9 +22,6 @@ const isCorrectGuess = () => {
         document.getElementById("input-result").innerHTML = "correct!";
 
         sendGuess(userGuess);
-
-        displayPreviousGuesses(userGuess);
-
     } else {
         document.getElementById("input-result").innerHTML = "incorrect";
         lives -= 1;
@@ -35,8 +29,6 @@ const isCorrectGuess = () => {
         displayLivesRemaining();
 
         sendGuess(userGuess);
-
-        displayPreviousGuesses(userGuess);
     }
 }
 
@@ -63,7 +55,7 @@ const displayLivesRemaining = () => {
 
 
 //  web socket connection
-const url = "ws://localhost:3000";
+const url = "ws://localhost:8080";
 const connection = new WebSocket(url);
 const FROM_CLIENT = "FROM CLIENT: ";
 const FROM_SERVER = "TO CLIENT: ";
