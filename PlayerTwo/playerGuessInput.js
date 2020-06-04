@@ -28,6 +28,7 @@ const isCorrectGuess = () => {
 
         displayLivesRemaining();
 
+        // THIS SENDS THE GUESS TO THE SERVER
         sendGuess(userGuess);
     }
 }
@@ -56,21 +57,20 @@ const displayLivesRemaining = () => {
 
 //  web socket connection
 const url = "ws://localhost:8080";
-const connection = new WebSocket(url);
-const FROM_CLIENT = "FROM CLIENT: ";
-const FROM_SERVER = "TO CLIENT: ";
+const connection = new WebSocket(url); // create a new websocket connection to port 8080
+const FROM_CLIENT = "FROM CLIENT: "; // put this at the beginning of the message
 
-connection.onopen = () => {
-    console.log("connected");
+connection.onopen = () => { // when the connection to port 8080 is made
+    console.log("connected"); // testing message
     connection.send("hello");
 }
 
-connection.onerror = err => {
+connection.onerror = err => { // if the connection has an error
     console.log(`Websocket error ${err}`)
 }
 
-connection.onmessage = e => {
-    displayPreviousGuesses(e.data);
+connection.onmessage = e => { // if this connection recieves a message from the server
+    displayPreviousGuesses(e.data); // display the guess recieved from the server
 }
 
 
