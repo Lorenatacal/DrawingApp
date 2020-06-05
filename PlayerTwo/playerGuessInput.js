@@ -21,15 +21,21 @@ const isCorrectGuess = () => {
 
         document.getElementById("input-result").innerHTML = "correct!";
 
+        displayPreviousGuesses(userGuess)
+
         sendGuess(userGuess);
+
     } else {
         document.getElementById("input-result").innerHTML = "incorrect";
         lives -= 1;
 
-        displayLivesRemaining();
+        minusLivesRemaining();
+
+        displayPreviousGuesses(userGuess);
 
         // THIS SENDS THE GUESS TO THE SERVER
         sendGuess(userGuess);
+
     }
 }
 
@@ -50,7 +56,7 @@ const sendGuess = (guess) => {
 }
 
 
-const displayLivesRemaining = () => {
+const minusLivesRemaining = () => {
     document.getElementById('lives').innerHTML = "lives: " + lives;
 }
 
@@ -66,12 +72,12 @@ connection.onopen = () => { // when the connection to port 8080 is made
 }
 
 connection.onerror = err => { // if the connection has an error
-    console.log(`Websocket error ${err}`)
+    console.log(`Websocket error ${err}`);
 }
 
 connection.onmessage = e => { // if this connection recieves a message from the server
     console.log(e.data)
-    displayPreviousGuesses(String(e.data).replace(INCOMING_GUESS, ""))
+    displayPreviousGuesses(String(e.data).replace(INCOMING_GUESS, ""));
 }
 
 
