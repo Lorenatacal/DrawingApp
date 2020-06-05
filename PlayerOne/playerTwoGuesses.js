@@ -11,19 +11,19 @@ const displayPreviousGuesses = (lastGuess) => {
 
 //  web socket connection
 const url = "wss://i788c.sse.codesandbox.io/";
-const connection = new WebSocket(url); // create a new websocket connection to port 8080
+const guessConnection = new WebSocket(url + "guess"); // create a new websocket connection to port 8080
 const INCOMING_GUESS = "INCOMING GUESS: "; // put this at the beginning of the message
 
-connection.onopen = () => { // when the connection to port 8080 is made
+guessConnection.onopen = () => { // when the connection to port 8080 is made
     console.log("player one connected"); // testing message
-    connection.send("hello from player one");
+    guessConnection.send("hello from player one");
 }
 
-connection.onerror = err => { // if the connection has an error
+guessConnection.onerror = err => { // if the connection has an error
     console.log(`Websocket error ${err}`)
 }
 
-connection.onmessage = e => { // if this connection recieves a message from the server
+guessConnection.onmessage = e => { // if this connection recieves a message from the server
     console.log(e.data)
     displayPreviousGuesses(String(e.data).replace(INCOMING_GUESS, ""))
 }

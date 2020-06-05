@@ -33,5 +33,30 @@ $(document).ready(function() {
       randomWord = wordsArray[0][Math.floor(Math.random() * 31)];
       $("#randomWord").text(randomWord);
   });
+
+  $('#choose-word').on("click", function(event) { // send the chosen word to player two's page for validation
+    console.log('choosing this word');
+    chosenWord = $("#randomWord").text();
+    guessConnection.send(INCOMING_SUBMITTED_WORD + chosenWord);
+
+    //once they choose the word, they shouldn't be able to choose a new word, or get a new word
+    document.getElementById("choose-word").style.display = "none";
+    document.getElementById("get-new-word").style.display = "none";
+  })
 })
+
+//  web socket connection
+const url = "wss://i788c.sse.codesandbox.io/";
+const guessConnection = new WebSocket(url + "chosen-word"); // create a new websocket connection to port 8080 - connect to specific endpoint 'submit-word'
+const INCOMING_SUBMITTED_WORD = "INCOMING SUBMITTED WORD: "; // put this at the beginning of the message
+
+guessConnection.onopen = () => { // when the connection to port 8080 is made
+  guessConnection.send("hello from player one's word submission connection");
+}
+
+guessConnection.onerror = err => { // if the connection has an error
+  console.log(`Websocket error ${err}`)
+}
+
+
 

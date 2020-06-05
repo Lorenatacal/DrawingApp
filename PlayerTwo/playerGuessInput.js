@@ -1,4 +1,4 @@
-const answer = "Cat";
+var answer = "Cat";
 var lives = 5;
 
 
@@ -52,7 +52,7 @@ const displayPreviousGuesses = (lastGuess) => {
 
 
 const sendGuess = (guess) => {
-    connection.send(`${INCOMING_GUESS}${guess}`)
+    guessConnection.send(`${INCOMING_GUESS}${guess}`)
 }
 
 
@@ -61,24 +61,35 @@ const minusLivesRemaining = () => {
 }
 
 
-//  web socket connection
+//  web socket connections
+
+// for sending guesses to the server
 const url = "wss://i788c.sse.codesandbox.io/";
-const connection = new WebSocket(url); // create a new websocket connection to port 8080
+const guessConnection = new WebSocket(url + "guess"); // create a new websocket connection to port 8080 --> send to endpoint "guess"
 const INCOMING_GUESS = "INCOMING GUESS: "; // put this at the beginning of the message
 
-connection.onopen = () => { // when the connection to port 8080 is made
+guessConnection.onopen = () => { // when the connection to port 8080 is made
     console.log("player two connected"); // testing message
-    connection.send("hello");
+    guessConnection.send("hello");
 }
 
-connection.onerror = err => { // if the connection has an error
-    console.log(`Websocket error ${err}`);
+guessConnection.onerror = err => { // if the connection has an error
+    console.log(`Websocket error ${err}`)
 }
 
-connection.onmessage = e => { // if this connection recieves a message from the server
-    console.log(e.data)
-    displayPreviousGuesses(String(e.data).replace(INCOMING_GUESS, ""));
+
+// collect the chosen word from player one
+const chosenWordConnection = new WebSocket(url + "chosen-word");
+
+chosenWordConnection.onopen = () => {
+    chosenWordConnection.send("player two is ready to receive the chosen word");
 }
+
+chosenWordConnection.onmessage = (e) => {
+    answer = e.data;
+    console.log('answer is now: ' + answer);
+}
+
 
 
 
