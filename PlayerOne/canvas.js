@@ -1,5 +1,5 @@
 // canvas
-const Y_AXIS_COMPENSATION = - 15
+const Y_AXIS_COMPENSATION = - 85
 const X_AXIS_COMPENSATION = - 4
 
 window.addEventListener("load", () => {
