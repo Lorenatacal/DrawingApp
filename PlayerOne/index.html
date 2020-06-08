@@ -14,23 +14,40 @@
     <title> Drawing Game</title>
 </head>
     <body>
-        <div class="container-fluid text-center">
-            <h1 class=title> Draw the following word</h1>
-            <h1 id='randomWord' class=word></h1>
-            <button id="get-new-word" class="get-Word">Get New Word</button>
-            <button id="choose-word">Choose this word to draw</button>
+        <div class="flex-container">
+            <section class="main">
+                <div class="container-fluid text-center">
+                    <h1>Picture Guessing Game</h1>
+                    <h2 class=title> Draw the following word</h1>
+                    <h1 id='randomWord' class=word></h1>
+                    <button id="get-new-word" class="get-Word">Get New Word</button>
+                    <button id="choose-word">Choose this word to draw</button>
+                </div>
+
+                <div>
+                    <canvas id="canvas"></canvas>
+                    <br />
+                    <div id= "canvas-controls" class='text-center'>
+                        <button id="erase">eraser</button>
+                        <button id="pen">pen</button>
+                        <button id="restart">restart</button>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="guesses">
+                <div>
+                    <p>Player Two's Previous Guesses</p>
+                    <ul id="previous-guesses">
+                    </ul>
+                </div>
+            </aside>
+
+            <aside class="winner-container">
+                <h5 id="winner">Player Two Wins!</h5>
+            </aside>
         </div>
-        <div>
-            <canvas id="canvas"></canvas>
-            <br />
-            <button id="erase">eraser</button>
-            <button id="pen">pen</button>
-            <button id="restart">restart</button>
-        </div>
-        <br>
-            <h5>Player Two's Previous Guesses</h5>
-            <ul id="previous-guesses">
-            </ul>
+
         <script
             src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
