@@ -91,5 +91,16 @@ body {
   line-height: 49px;
   color: #FFFFFF;
 }
+#input-result {
+  position: absolute;
+  left: 67%;
+  top: 66%; 
+  font-family: Questrial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 2vw;
+  line-height: 25px;
+  color: #FFFFFF;
+}
 
 
