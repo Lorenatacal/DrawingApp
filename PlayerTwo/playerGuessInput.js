@@ -1,15 +1,15 @@
 var answer = "Cat";
-var lives = 5;
-
+var timer;
+var timerDuration = 10; // player currently has ten seconds to guess :)
+var correctGuess = false;
 
 const isCorrectGuess = () => {
     // validation
     const userGuess = String(document.getElementById("guess-entry").value);
     console.log(userGuess);
 
-    if(lives == 0) {
-
-        alert("You've run out of lives :(");
+    if(timerDuration == 0) {
+        alert("You've run out of time :(");
         return;
     }
 
@@ -21,6 +21,8 @@ const isCorrectGuess = () => {
 
         document.getElementById("input-result").innerHTML = "correct!";
 
+        correctGuess = true;
+
         displayPreviousGuesses(userGuess)
 
         sendGuess(userGuess);
@@ -28,8 +30,6 @@ const isCorrectGuess = () => {
     } else {
         document.getElementById("input-result").innerHTML = "incorrect";
         lives -= 1;
-
-        minusLivesRemaining();
 
         displayPreviousGuesses(userGuess);
 
@@ -56,8 +56,41 @@ const sendGuess = (guess) => {
 }
 
 
-const minusLivesRemaining = () => {
-    document.getElementById('lives').innerHTML = "lives: " + lives;
+// const minusLivesRemaining = () => {
+//     document.getElementById('lives').innerHTML = "lives: " + lives;
+// }
+
+
+const startTimer = () => {
+    timer = setInterval(() => {
+
+        document.getElementById('timer').innerHTML = "Time left to guess: " + timerDuration;
+
+        if (timerDuration == 0) {
+            stopTimer();
+
+            // remove user input once they run out of time
+            document.getElementById("guess-entry").style.display = "none";
+            document.getElementById("submit-guess").style.display = "none";
+
+            document.getElementById("input-result").innerHTML = "You've run out of time!"
+
+        } else if (correctGuess == true) {
+
+            stopTimer();
+
+            // remove user input once they guess correctly
+            document.getElementById("guess-entry").style.display = "none";
+            document.getElementById("submit-guess").style.display = "none";
+        } else {
+            timerDuration -= 1;
+        }
+
+    }, 1000)
+}
+
+const stopTimer = () => {
+    clearInterval(timer);
 }
 
 
@@ -88,6 +121,8 @@ chosenWordConnection.onopen = () => {
 chosenWordConnection.onmessage = (e) => {
     answer = e.data;
     console.log('answer is now: ' + answer);
+    startTimer();
+    console.log('Start guessing now!')
 }
 
 
