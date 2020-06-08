@@ -19,29 +19,33 @@
         <meta name="HandheldFriendly" content="true">
         <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Seaweed+Script&display=swap" rel="stylesheet">
         <title> Drawing Game</title>
     </head>
 
     <body>
         <div>
+            <div class="container-fluid text-center">
+                <h1 class="title"> Picture Guessing Game </h1>
             <p id="timer" align="right"></p>
-
             <div>
                 <canvas id="canvas"></canvas>
                 <br />
             </div>
 
             <div>
-                <h4>Enter your guess here</h4>
-                <input id="guess-entry" type="text" required>
+                <input id="guess-entry" type="text" required placeholder="Enter your guess here">
                 <button id="submit-guess" onclick="isCorrectGuess()">Submit</button>
                 <p id="input-result"></p>
             </div>
 
             <br>
-            <h5>Your Previous Guesses</h5>
+            <h5 id="guesses">Your Previous Guesses</h5>
             <ul id="previous-guesses">
+                First quess:
             </ul>
+            <h5 id="winner">Player Two Wins!</h5>
         </div>
     </body>
 
