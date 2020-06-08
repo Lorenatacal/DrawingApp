@@ -1,6 +1,7 @@
-var answer = "Cat";
-var timer;
-var timerDuration = 10; // player currently has ten seconds to guess :)
+const PLAYER_TWO_WIN = 'PLAYER TWO WIN';
+
+var answer = "Cat"; // no longer has to be defined, now that chosen word is sent from player one
+
 var correctGuess = false;
 
 const isCorrectGuess = () => {
@@ -22,6 +23,7 @@ const isCorrectGuess = () => {
         document.getElementById("input-result").innerHTML = "correct!";
 
         correctGuess = true;
+
 
         displayPreviousGuesses(userGuess)
 
@@ -50,47 +52,58 @@ const displayPreviousGuesses = (lastGuess) => {
     }
 }
 
-
 const sendGuess = (guess) => {
     guessConnection.send(`${INCOMING_GUESS}${guess}`)
 }
 
-
-// const minusLivesRemaining = () => {
-//     document.getElementById('lives').innerHTML = "lives: " + lives;
-// }
-
+var timerWorker;
 
 const startTimer = () => {
-    timer = setInterval(() => {
+    if (typeof(Worker) !== "undefined" ) {
+        if (typeof(timerWorker) == "undefined") {
 
-        document.getElementById('timer').innerHTML = "Time left to guess: " + timerDuration;
+            // webworkers --> a way of multithreading in js
+            timerWorker = new Worker("timer.js");
 
-        if (timerDuration == 0) {
-            stopTimer();
-
-            // remove user input once they run out of time
-            document.getElementById("guess-entry").style.display = "none";
-            document.getElementById("submit-guess").style.display = "none";
-
-            document.getElementById("input-result").innerHTML = "You've run out of time!"
-
-        } else if (correctGuess == true) {
-
-            stopTimer();
-
-            // remove user input once they guess correctly
-            document.getElementById("guess-entry").style.display = "none";
-            document.getElementById("submit-guess").style.display = "none";
-        } else {
-            timerDuration -= 1;
         }
 
-    }, 1000)
+        timerWorker.onmessage = (event) => {
+            if (correctGuess == true) {
+
+                document.getElementById('timer').innerHTML = "Time left to guess: " + event.data;
+
+                // remove user input once they guess correctly
+                document.getElementById("guess-entry").style.display = "none";
+                document.getElementById("submit-guess").style.display = "none";
+
+                stopWorker();
+
+            } else if (event.data == 0 && correctGuess == false ) {
+
+                document.getElementById('timer').innerHTML = "Time left to guess: " + event.data;
+
+                document.getElementById("input-result").innerHTML = "You've run out of time!"
+
+                // remove user input once they run out of time
+                document.getElementById("guess-entry").style.display = "none";
+                document.getElementById("submit-guess").style.display = "none";
+
+                stopWorker();
+
+            } else {
+
+                document.getElementById('timer').innerHTML = "Time left to guess: " + event.data;
+
+            }
+        };
+    }
 }
 
-const stopTimer = () => {
-    clearInterval(timer);
+const stopWorker = () => {
+
+    timerWorker.terminate(); // terminates instance of web worker
+    timerWorker = undefined;
+
 }
 
 
