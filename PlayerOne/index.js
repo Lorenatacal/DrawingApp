@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var wordsArray = [];
+  var wordsArray = ["dog", "wolf", "lemon", "strawberry", "tower", "lovers"];
   var randomWord = ''
 
   function getRandomWord() {
@@ -30,7 +30,7 @@ $(document).ready(function() {
 
   $(".get-Word").on("click", function(event) {
     event.preventDefault();
-      randomWord = wordsArray[0][Math.floor(Math.random() * 31)];
+      randomWord = wordsArray[Math.floor(Math.random() * 6)];
       $("#randomWord").text(randomWord);
   });
 

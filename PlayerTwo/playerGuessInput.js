@@ -31,7 +31,7 @@ const isCorrectGuess = () => {
 
     } else {
         document.getElementById("input-result").innerHTML = "incorrect";
-        lives -= 1;
+        // lives -= 1; this is not defined
 
         displayPreviousGuesses(userGuess);
 
@@ -116,7 +116,7 @@ const INCOMING_GUESS = "INCOMING GUESS: "; // put this at the beginning of the m
 
 guessConnection.onopen = () => { // when the connection to port 8080 is made
     console.log("player two connected"); // testing message
-    guessConnection.send("hello");
+    guessConnection.send(document.getElementById('guess-entry').value);
 }
 
 guessConnection.onerror = err => { // if the connection has an error

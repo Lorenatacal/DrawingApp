@@ -10,9 +10,9 @@ const displayPreviousGuesses = (lastGuess) => {
 }
 
 //  web socket connection
-const url = "wss://i788c.sse.codesandbox.io/";
-const guessConnection = new WebSocket(url + "guess"); // create a new websocket connection to port 8080
-const INCOMING_GUESS = "INCOMING GUESS: "; // put this at the beginning of the message
+// url = "wss://i788c.sse.codesandbox.io/";
+// guessConnection = new WebSocket(url + "guess"); // create a new websocket connection to port 8080
+INCOMING_GUESS = "INCOMING GUESS: "; // put this at the beginning of the message
 
 guessConnection.onopen = () => { // when the connection to port 8080 is made
     console.log("player one connected"); // testing message
