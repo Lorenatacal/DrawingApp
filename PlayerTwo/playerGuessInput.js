@@ -1,5 +1,3 @@
-const PLAYER_TWO_WIN = 'PLAYER TWO WIN';
-
 var answer; // no longer has to be defined, now that chosen word is sent from player one
 
 var hasTimeToGuess = false;
@@ -37,7 +35,12 @@ const isCorrectGuess = () => {
 
         sendGuess(userGuess);
 
+        sendWinner(PLAYER_TWO_WIN);
+
+        document.getElementById('winner').innerHTML = "You Win!";
+
     } else {
+        console.log(userGuess);
         document.getElementById("input-result").innerHTML = "incorrect";
         // lives -= 1; this is not defined
 
@@ -45,7 +48,6 @@ const isCorrectGuess = () => {
 
         // THIS SENDS THE GUESS TO THE SERVER
         sendGuess(userGuess);
-
     }
 }
 
@@ -61,8 +63,13 @@ const displayPreviousGuesses = (lastGuess) => {
 }
 
 const sendGuess = (guess) => {
-    guessConnection.send(`${INCOMING_GUESS}${guess}`)
+    guessConnection.send(`${INCOMING_GUESS}${guess}`);
 }
+
+const sendWinner = (winner) => {
+    winnerConnection.send(`${winner}`);
+}
+
 
 var timerWorker;
 
@@ -98,6 +105,10 @@ const startTimer = () => {
                 document.getElementById("guess-entry").style.display = "none";
                 document.getElementById("submit-guess").style.display = "none";
 
+                sendWinner(PLAYER_ONE_WIN);
+
+                document.getElementById('winner').innerHTML = "You Lose!"
+
                 stopWorker();
 
             } else {
@@ -122,12 +133,13 @@ const stopWorker = () => {
 
 // for sending guesses to the server
 const url = "wss://i788c.sse.codesandbox.io/";
+
+// send guesses to everyone
 const guessConnection = new WebSocket(url + "guess"); // create a new websocket connection to port 8080 --> send to endpoint "guess"
 const INCOMING_GUESS = "INCOMING GUESS: "; // put this at the beginning of the message
 
 guessConnection.onopen = () => { // when the connection to port 8080 is made
     console.log("player two connected"); // testing message
-    guessConnection.send(document.getElementById('guess-entry').value);
 }
 
 guessConnection.onerror = err => { // if the connection has an error
@@ -137,16 +149,30 @@ guessConnection.onerror = err => { // if the connection has an error
 
 // collect the chosen word from player one
 const chosenWordConnection = new WebSocket(url + "chosen-word");
+const INCOMING_SUBMITTED_WORD = "INCOMING SUBMITTED WORD: ";
 
 chosenWordConnection.onopen = () => {
     chosenWordConnection.send("player two is ready to receive the chosen word");
 }
 
 chosenWordConnection.onmessage = (e) => {
-    answer = e.data;
-    console.log('answer is now: ' + answer);
-    startTimer();
+    if (e.data.startsWith(INCOMING_SUBMITTED_WORD)) {
+        answer = e.data.replace(INCOMING_SUBMITTED_WORD, "");
+        console.log('answer is now: ' + answer);
+        startTimer();
+    }
 }
+
+
+// send the winner to everyone
+const winnerConnection =  new WebSocket(url + "winner");
+const PLAYER_TWO_WIN = "PLAYER TWO WIN ";
+const PLAYER_ONE_WIN = "PLAYER ONE WIN";
+
+winnerConnection.onopen = () => {
+    // winnerConnection.send("Ready to send the winner");
+}
+
 
 
 
