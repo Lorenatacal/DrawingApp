@@ -1,12 +1,18 @@
 // canvas
-const Y_AXIS_COMPENSATION = - 85
-const X_AXIS_COMPENSATION = - 4
+const Y_AXIS_COMPENSATION = - 135
+const X_AXIS_COMPENSATION = - 210
+
 
 window.addEventListener("load", () => {
     const canvas = document.querySelector("#canvas");
     const ctx = canvas.getContext("2d");
-    canvas.height = 400;
-    canvas.width = 500;
+    // canvas.height = window.innerHeight - 500;
+    // canvas.width = window.innerWidth - 500;
+
+    // canvas.addEventListener("resize", () => {
+
+    // })
+
     let brush = true;
     let drawing = false;
     function startPosition(e) {
@@ -24,7 +30,7 @@ window.addEventListener("load", () => {
         } else {
             ctx.strokeStyle = "white"
         }
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 3.5;
         ctx.lineCap = "round";
         //  x and y compensation constants are added to make brush placement more accurate
         ctx.lineTo(e.clientX + X_AXIS_COMPENSATION, e.clientY + Y_AXIS_COMPENSATION);
@@ -47,4 +53,4 @@ window.addEventListener("load", () => {
     erase.addEventListener("click", switchToErase);
     pen.addEventListener("click", switchToBrush);
     restart.addEventListener("click", clearAll);
-  })
+ })
