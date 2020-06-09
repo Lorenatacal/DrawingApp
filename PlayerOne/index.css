@@ -1,31 +1,90 @@
-body {
-    background-image: url(https://wallpaperhd.wiki/wp-content/uploads/video-game-background-images-animation-of-1980s-old-arcade-video-game-platform-level-vy9reo4xe-f0000.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 100% top;
-    background-attachment: fixed;
+@import url('https://fonts.googleapis.com/css2?family=Questrial&family=Seaweed+Script&display=swap');
+
+@media (min-width: 850px) {
+  .main {
+    max-width: 60%;
+    order: 1 !important;
+  }
+
+  .guesses {
+    order: 0 !important;
+  }
+
+  .winner-container {
+    order: 2 !important;
+  }
+
+  #winner {
+    font-family: "Seaweed Script", cursive;
+    font-size: 40px;
+    color: white;
+  }
+
+
+  .guesses {
+    position: relative;
+    top: -100px !important;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+  }
 }
+
+body {
+  background-image: url(https://wallpaperhd.wiki/wp-content/uploads/video-game-background-images-animation-of-1980s-old-arcade-video-game-platform-level-vy9reo4xe-f0000.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 100% top;
+  background-attachment: fixed;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+}
+
+.main {
+  order: 1;
+}
+
+.guesses {
+  order: 2;
+}
+
 .container-fluid {
   max-width: 95%;
   margin-left: auto;
   margin-right: auto;
 }
+
 .title {
   text-align: center;
   margin-top: 1vw;
   font-size: 250%;
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Seaweed Script', cursive;
   opacity: 0.8;
   border: none;
   color: white;
   margin-bottom: -0.5vw;
 }
+
 .word {
   text-align: center;
   font-size: 200%;
   color: white;
   opacity: 0.8;
 }
+
 .button {
     background-color: none;
     opacity: 0.8;
@@ -37,8 +96,88 @@ body {
     margin-left: 35%;
     margin-top: 13%;
 }
+
 #canvas {
   border: 2px solid black;
   background-color: white;
+  display: block;
+  margin: auto;
 }
+
+#canvas-controls {
+  display: flex;
+  flex-wrap: none;
+  justify-content: space-evenly;
+}
+
+div ~ ul {
+  list-style-type: none;
+}
+
+:not(button) {
+  color: white;
+  font-family: "Questrial", "sans-serif";
+}
+
+div > button {
+  background-color: #FFE39A;
+  color: black;
+  padding: 10px;
+  border: none;
+  text-decoration: none;
+}
+
+div {
+  padding :10px;
+}
+
+p:first-child {
+  font-size: 20px;
+}
+
+@keyframes loading {
+  0% {
+    /* background-image: linear-gradient(to right, #FFE39A, blue); */
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+    /* background-image: linear-gradient(to right, blue, #FFE39A,); */
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+h1:empty {
+  display: block;
+  margin: 0 auto;
+
+  width: 3rem;
+  height: 3rem;
+  border: 7px solid rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.3);;
+  /* border-top-color: #fff;
+  border-radius: ; */
+  animation: 1s spin infinite ease-in-out;
+}
+
+#random-word-container {
+  padding: 20px;
+}
+
+#winner {
+  display: block;
+  text-align: center;
+  font-family: "Seaweed Script", cursive;
+  font-size: 40px;
+}
+
+
+
+
 
