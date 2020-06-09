@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Questrial&family=Seaweed+Script&display=swap');
 
-@media (min-width: 850px) {
+/* @media (min-width: 850px) {
   .main {
     max-width: 60%;
     order: 1 !important;
@@ -34,7 +34,7 @@
     align-items: center;
     padding: 20px;
   }
-}
+} */
 
 body {
   background-image: url(https://wallpaperhd.wiki/wp-content/uploads/video-game-background-images-animation-of-1980s-old-arcade-video-game-platform-level-vy9reo4xe-f0000.jpg);
@@ -173,7 +173,9 @@ h1:empty {
   font-size: 40px;
 }
 
-
-
+#canvas {
+  height: 800px;
+  width: 800px;
+}
 
 
