@@ -40,6 +40,7 @@ const isCorrectGuess = () => {
         document.getElementById('winner').innerHTML = "You Win!";
 
     } else {
+        console.log(userGuess);
         document.getElementById("input-result").innerHTML = "incorrect";
         // lives -= 1; this is not defined
 
