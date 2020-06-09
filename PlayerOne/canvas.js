@@ -1,7 +1,6 @@
 // canvas
-const Y_AXIS_COMPENSATION = - 135
-const X_AXIS_COMPENSATION = - 210
-
+const Y_AXIS_COMPENSATION = - 290
+const X_AXIS_COMPENSATION = - 770
 
 window.addEventListener("load", () => {
     const canvas = document.querySelector("#canvas");
