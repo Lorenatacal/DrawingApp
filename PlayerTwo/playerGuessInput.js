@@ -1,7 +1,8 @@
 const PLAYER_TWO_WIN = 'PLAYER TWO WIN';
 
-var answer = "Cat"; // no longer has to be defined, now that chosen word is sent from player one
+var answer; // no longer has to be defined, now that chosen word is sent from player one
 
+var hasTimeToGuess = false;
 var correctGuess = false;
 
 const isCorrectGuess = () => {
@@ -9,9 +10,16 @@ const isCorrectGuess = () => {
     const userGuess = String(document.getElementById("guess-entry").value);
     console.log(userGuess);
 
-    if(timerDuration == 0) {
-        alert("You've run out of time :(");
+    if (answer == undefined) {
+
+        alert("player one hasn't chosen a word to draw yet");
         return;
+
+    } else if (hasTimeToGuess == false) {
+
+        alert("You've run out of time to guess :(");
+        return;
+
     }
 
     if (!userGuess) {
@@ -59,6 +67,8 @@ const sendGuess = (guess) => {
 var timerWorker;
 
 const startTimer = () => {
+    hasTimeToGuess = true;
+
     if (typeof(Worker) !== "undefined" ) {
         if (typeof(timerWorker) == "undefined") {
 
@@ -101,6 +111,7 @@ const startTimer = () => {
 
 const stopWorker = () => {
 
+    hasTimeToGuess = false;
     timerWorker.terminate(); // terminates instance of web worker
     timerWorker = undefined;
 
@@ -135,7 +146,6 @@ chosenWordConnection.onmessage = (e) => {
     answer = e.data;
     console.log('answer is now: ' + answer);
     startTimer();
-    console.log('Start guessing now!')
 }
 
 
