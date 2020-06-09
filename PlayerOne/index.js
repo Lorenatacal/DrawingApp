@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var wordsArray = ["dog", "wolf", "lemon", "strawberry", "tower", "lovers"];
+  var wordsArray = ["dog", "wolf", "lemon", "strawberry", "tower", "lovers", "apple", "worm", "jellyfish", "magic wand", "cat", "bookshelf", "violin"];
   var randomWord = ''
 
   function getRandomWord() {
@@ -15,11 +15,19 @@ $(document).ready(function() {
         }
       }
 
-      $.ajax(settings).done(function (response) {
+      $.ajax(settings)
+      .done(function (response) {
+        console.log('completed GET request for random words successfully');
         wordsArray.push(response.words);
         randomWord = wordsArray[0][Math.floor(Math.random() * wordsArray.length)];
         $("#randomWord").text(randomWord);
+      })
+      .fail(function (response) { // if we get a failed reponse, we will just switch to using the local array
+        console.log('failed random word request: ');
+        randomWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+        $("#randomWord").text(randomWord);
       });
+
     }
     catch(err) {
         alert("err");
