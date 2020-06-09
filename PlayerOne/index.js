@@ -78,7 +78,7 @@ winnerConnection.onmessage = (e) => {
   if (e.data == PLAYER_ONE_WIN) {
     document.getElementById('winner').innerHTML = "You Win!";
   } else if (e.data == PLAYER_TWO_WIN) {
-    document.getElementById('winner').innerHTML = "You Lose!";
+    document.getElementById('winner').innerHTML = "You Lost!";
   }
 }
 
