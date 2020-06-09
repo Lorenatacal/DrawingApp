@@ -24,6 +24,8 @@ guessConnection.onerror = err => { // if the connection has an error
 }
 
 guessConnection.onmessage = e => { // if this connection recieves a message from the server
-    console.log(e.data)
-    displayPreviousGuesses(String(e.data).replace(INCOMING_GUESS, ""))
+    if (e.data.startsWith(INCOMING_GUESS)){
+        console.log(e.data)
+        displayPreviousGuesses(String(e.data).replace(INCOMING_GUESS, ""))
+    }
 }

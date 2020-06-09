@@ -156,9 +156,11 @@ chosenWordConnection.onopen = () => {
 }
 
 chosenWordConnection.onmessage = (e) => {
-    answer = e.data.replace(INCOMING_SUBMITTED_WORD, "");
-    console.log('answer is now: ' + answer);
-    startTimer();
+    if (e.data.startsWith(INCOMING_SUBMITTED_WORD)) {
+        answer = e.data.replace(INCOMING_SUBMITTED_WORD, "");
+        console.log('answer is now: ' + answer);
+        startTimer();
+    }
 }
 
 
