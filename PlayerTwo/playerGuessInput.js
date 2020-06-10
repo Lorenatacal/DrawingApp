@@ -132,7 +132,7 @@ const stopWorker = () => {
 //  web socket connections
 
 // for sending guesses to the server
-const url = "wss://i788c.sse.codesandbox.io/";
+const url = "wss://dug7q.sse.codesandbox.io/";
 
 // send guesses to everyone
 const guessConnection = new WebSocket(url + "guess"); // create a new websocket connection to port 8080 --> send to endpoint "guess"
