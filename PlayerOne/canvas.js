@@ -14,6 +14,7 @@ window.addEventListener("load", () => {
 
     let brush = true;
     let drawing = false;
+
     function startPosition(e) {
         drawing = true;
         draw(e);
@@ -34,7 +35,12 @@ window.addEventListener("load", () => {
         ctx.lineCap = "round";
         //  x and y compensation constants are added to make brush placement more accurate
         ctx.lineTo(e.clientX + X_AXIS_COMPENSATION, e.clientY + Y_AXIS_COMPENSATION);
-        drawingConnection.send(e.clientX + X_AXIS_COMPENSATION, e.clientY + Y_AXIS_COMPENSATION)
+        drawingConnection.send(`{
+            coordX : ${e.clientX + X_AXIS_COMPENSATION},
+            coordY : ${e.clientY + Y_AXIS_COMPENSATION},
+            isDrawing: ${drawing},
+            isUsingBrush: ${brush},
+        }`);
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(e.clientX + X_AXIS_COMPENSATION, e.clientY +  Y_AXIS_COMPENSATION);

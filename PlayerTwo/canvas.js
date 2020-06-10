@@ -51,4 +51,16 @@ function clearAll() {
 
 
 // create a socket to listen to the coordinates sent by player one
-// 
+const drawConnection = new WebSocket(url + "draw");
+
+drawConnection.onopen(() => {
+    drawConnection.send("I'm awake and waiting for a drawing");
+});
+
+drawingConnection.onerror((err) => {
+    console.log(err);
+});
+
+drawingConnection.onmessage(() => {
+
+})
