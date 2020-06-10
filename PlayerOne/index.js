@@ -55,7 +55,7 @@ $(document).ready(function() {
 
 //  web socket connection
 // route address
-const url = "wss://i788c.sse.codesandbox.io/";
+const url = "wss://dug7q.sse.codesandbox.io/";
 
 // connection to send chosen word to others
 const chosenWordConnection = new WebSocket(url + "chosen-word"); // create a new websocket connection to port 8080 - connect to specific endpoint 'submit-word'
