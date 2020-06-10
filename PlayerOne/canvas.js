@@ -59,8 +59,6 @@ window.addEventListener("load", () => {
 =======
   })
 
-    // url = "wss://dug7q.sse.codesandbox.io/";
-
   //send drawing to player two
   console.log(url, 'url')
   const drawingConnection = new WebSocket(url + "draw");
