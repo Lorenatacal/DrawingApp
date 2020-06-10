@@ -54,10 +54,9 @@ window.addEventListener("load", () => {
     erase.addEventListener("click", switchToErase);
     pen.addEventListener("click", switchToBrush);
     restart.addEventListener("click", clearAll);
-<<<<<<< HEAD
- })
-=======
   })
+
+    // url = "wss://dug7q.sse.codesandbox.io/";
 
   //send drawing to player two
   console.log(url, 'url')
@@ -72,4 +71,3 @@ window.addEventListener("load", () => {
   drawingConnection.onerror = err => {
       console.log(`Websocket error ${err}`)
   }
->>>>>>> de612d4... Add websockets to send the coordinates to player 2
