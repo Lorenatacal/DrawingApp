@@ -50,3 +50,5 @@ function clearAll() {
 }
 
 
+// create a socket to listen to the coordinates sent by player one
+// 
