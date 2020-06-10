@@ -38,11 +38,12 @@ function draw(e) {
     }
     ctx.lineWidth = 4;
     ctx.lineCap = "round";
+
     //  x and y compensation constants are added to make brush placement more accurate
-    ctx.lineTo(e.clientX + X_AXIS_COMPENSATION, e.clientY + Y_AXIS_COMPENSATION);
+    ctx.lineTo(e.coordX + X_AXIS_COMPENSATION, e.coordY + Y_AXIS_COMPENSATION);
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(e.clientX + X_AXIS_COMPENSATION, e.clientY +  Y_AXIS_COMPENSATION);
+    ctx.moveTo(e.coordX + X_AXIS_COMPENSATION, e.coordY +  Y_AXIS_COMPENSATION);
 }
 function switchToErase() {
     brush = false;
@@ -70,11 +71,28 @@ drawConnection.onerror = (err) => {
 
 drawConnection.onmessage = (e) => {
     if(e.data.startsWith(INCOMING_DRAWING)) {
-        console.log(e.data);
-        // some way to parse the message as a js object
-        let drawingCoords = JSON.parse(e.data.replace(INCOMING_DRAWING, ""));
-        console.log(drawingCoords);
 
-        startPosition(e.data.replace(INCOMING_DRAWING, ""));
+        let drawingAction = JSON.parse(e.data.replace(INCOMING_DRAWING, ""));
+        // console.log(drawingAction);
+
+        // then we need to be able to handle starting, continuing, stopping drawing, changing brush and resetting the page
+        // this switch statenment is used to copy the event listeners we use in player one
+        switch(drawingAction.actionType){
+            case "mousedown":
+                console.log('start drawing');
+                startPosition(drawingAction);
+                break;
+            case "mousemove":
+                console.log('mouse move');
+                draw(drawingAction);
+                break;
+            case "mouseup":
+                console.log("finish drawing");
+                endPosition(drawingAction);
+            default:
+                console.log(drawingAction);
+                break;
+        }
+        // startPosition(e.data.replace(INCOMING_DRAWING, ""));
     }
 };

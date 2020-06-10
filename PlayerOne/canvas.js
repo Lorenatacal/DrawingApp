@@ -14,6 +14,7 @@ window.addEventListener("load", () => {
 
     let brush = true;
     let drawing = false;
+    let shouldClearCanvas = false;
 
     function startPosition(e) {
         drawing = true;
@@ -47,24 +48,55 @@ window.addEventListener("load", () => {
     }
     function clearAll() {
         ctx.clearRect(0,0,canvas.width,canvas.height);
+        shouldClearCanvas = false;
     }
-    canvas.addEventListener("mousedown", startPosition);
-    canvas.addEventListener("mouseup", endPosition);
+    canvas.addEventListener("mousedown", (e) => {
+        drawingConnection.send(`${INCOMING_DRAWING}{
+            "coordX" : "${e.clientX + X_AXIS_COMPENSATION}",
+            "coordY" : "${e.clientY + Y_AXIS_COMPENSATION}",
+            "isDrawing" : "${drawing}",
+            "isUsingBrush" : "${brush}",
+            "clearCanvas" : ${shouldClearCanvas},
+            "actionType" : "mousedown"
+        }`);
+
+        startPosition(e);
+    });
+
+    canvas.addEventListener("mouseup", (e) => {
+        drawingConnection.send(`${INCOMING_DRAWING}{
+            "coordX" : "${e.clientX + X_AXIS_COMPENSATION}",
+            "coordY" : "${e.clientY + Y_AXIS_COMPENSATION}",
+            "isDrawing" : "${drawing}",
+            "isUsingBrush" : "${brush}",
+            "clearCanvas" : "${shouldClearCanvas}",
+            "actionType" : "mouseup"
+        }`);
+
+        endPosition()
+    });
 
     canvas.addEventListener("mousemove", (e) => {
         drawingConnection.send(`${INCOMING_DRAWING}{
-            coordX : ${e.clientX + X_AXIS_COMPENSATION},
-            coordY : ${e.clientY + Y_AXIS_COMPENSATION},
-            isDrawing: ${drawing},
-            isUsingBrush: ${brush}
+            "coordX" : "${e.clientX + X_AXIS_COMPENSATION}",
+            "coordY" : "${e.clientY + Y_AXIS_COMPENSATION}",
+            "isDrawing" : "${drawing}",
+            "isUsingBrush" : "${brush}",
+            "clearCanvas" : "${shouldClearCanvas}",
+            "actionType" : "mousemove"
         }`);
 
         draw(e);
     });
 
     erase.addEventListener("click", switchToErase);
+
     pen.addEventListener("click", switchToBrush);
-    restart.addEventListener("click", clearAll);
+    restart.addEventListener("click", () => {
+        shouldClearCanvas = true;
+        clearAll();
+    });
+
   })
 
     // url = "wss://dug7q.sse.codesandbox.io/";
@@ -76,7 +108,7 @@ window.addEventListener("load", () => {
 
   drawingConnection.onopen = () => {
       console.log("Player's one drawing");
-      drawingConnection.send('player two is ready to receive drawing')
+      drawingConnection.send('player one is ready to send drawing')
   }
 
   drawingConnection.onerror = err => {
