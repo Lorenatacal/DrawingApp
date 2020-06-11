@@ -71,6 +71,16 @@ body {
   text-align: center;
   margin-top: 1vw;
   font-size: 250%;
+  font-family: 'Questrial', cursive;
+  opacity: 0.8;
+  border: none;
+  color: white;
+  margin-bottom: -0.5vw;
+}
+.subtitle {
+  text-align: center;
+  margin-top: 1vw;
+  font-size: 250%;
   font-family: 'Seaweed Script', cursive;
   opacity: 0.8;
   border: none;
