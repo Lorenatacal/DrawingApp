@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Questrial&family=Seaweed+Script&display=swap');
 
-/* @media (min-width: 850px) {
+@media (min-width: 850px) {
   .main {
     max-width: 60%;
     order: 1 !important;
@@ -34,7 +34,7 @@
     align-items: center;
     padding: 20px;
   }
-} */
+}
 
 body {
   background-image: url(https://wallpaperhd.wiki/wp-content/uploads/video-game-background-images-animation-of-1980s-old-arcade-video-game-platform-level-vy9reo4xe-f0000.jpg);
@@ -95,13 +95,6 @@ body {
     font-family: 'Berkshire Swash', cursive;
     margin-left: 35%;
     margin-top: 13%;
-}
-
-#canvas {
-  /* border: 2px solid black; */
-  background-color: white;
-  display: block;
-  /* margin: auto; */
 }
 
 #canvas-controls {
@@ -173,9 +166,23 @@ h1:empty {
   font-size: 40px;
 }
 
+
+/* #placeholder {
+  width:924px;
+  height:599px;
+  margin:0 auto;
+  padding:14px 0 75px 14px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+} */
+
 #canvas {
-  height: 500px;
-  width: 600px;
+  position:relative;
+  border:none;
+  background-color:#FFF;
+  overflow:hidden;
+  /* cursor:crosshair; */
 }
 
 

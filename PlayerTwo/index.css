@@ -1,3 +1,4 @@
+
 body {
     background-image: url(https://wallpaperhd.wiki/wp-content/uploads/video-game-background-images-animation-of-1980s-old-arcade-video-game-platform-level-vy9reo4xe-f0000.jpg);
     background-repeat: no-repeat;
@@ -22,15 +23,6 @@ body {
   font-size: 2vw;
   text-align: center;
   color: #FFFFFF;
-}
-#canvas {
-  position: absolute;
-  width: 35%;
-  height: 50%;
-  left: 30%;
-  top: 10%;
-  background: #FFFFFF;
-
 }
 
 #guess-entry {
@@ -62,7 +54,7 @@ body {
 
 #guesses {
   position: absolute;
-  left: 5%;
+  left: 2%;
   top: 20%;
   font-family: Questrial;
   font-style: normal;
@@ -95,7 +87,9 @@ body {
   font-size: 2vw;
   line-height: 49px;
   color: #FFFFFF;
+  padding-left: 100px;
 }
+
 #input-result {
   position: absolute;
   left: 67%;
@@ -107,5 +101,30 @@ body {
   line-height: 25px;
   color: #FFFFFF;
 }
+
+#canvas-placeholder {
+  /* width:924px;
+  height:599px;
+  margin:0 auto;
+  padding:14px 0 75px 14px;
+  background-color: white; */
+  display: flex;
+  justify-content: center;
+}
+
+#canvas {
+  position:relative;
+  top: 60px;
+  border:none;
+  background-color:#FFF;
+  overflow:hidden;
+  /* cursor:crosshair; */
+}
+
+#timer {
+  color: white;
+  font-family: "Questrial", sans-serif;
+}
+
 
 

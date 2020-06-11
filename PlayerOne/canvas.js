@@ -5,8 +5,8 @@ const X_AXIS_COMPENSATION = - 670
 window.addEventListener("load", () => {
     const canvas = document.querySelector("#canvas");
     const ctx = canvas.getContext("2d");
-    // canvas.height = window.innerHeight - 500;
-    // canvas.width = window.innerWidth - 500;
+    canvas.height = 500;
+    canvas.width = 600;
 
     // canvas.addEventListener("resize", () => {
 
@@ -34,22 +34,43 @@ window.addEventListener("load", () => {
         }
         ctx.lineWidth = 2.5;
         ctx.lineCap = "round";
-        //  x and y compensation constants are added to make brush placement more accurate
-        ctx.lineTo(e.clientX + X_AXIS_COMPENSATION, e.clientY + Y_AXIS_COMPENSATION);
+
+        // get position of the mouse on the canvas
+        var pos = getMousePos(e);
+
+        ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
         ctx.beginPath();
-        ctx.moveTo(e.clientX + X_AXIS_COMPENSATION, e.clientY +  Y_AXIS_COMPENSATION);
+        ctx.moveTo(pos.x, pos.y);
     }
+
     function switchToErase() {
         brush = false;
     }
+
     function switchToBrush() {
         brush = true;
     }
+
     function clearAll() {
         ctx.clearRect(0,0,canvas.width,canvas.height);
         shouldClearCanvas = false;
     }
+
+    function getMousePos(e) {
+        // rect is the area that an element occupies relative to the size of the view port
+        // we can get the exact coordinates of the mouse relative to the canvas itself by subtracting the canvas's area from the outer viewport area
+        // because we are always checking the canvas position relative to the rest of the viewport, it is much more accurate than using constant values
+        // to compensate for the offset
+        // this element method also takes into account the amount of scroll in a webpage!
+
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        };
+    }
+
     canvas.addEventListener("mousedown", (e) => {
         drawingConnection.send(`${INCOMING_DRAWING}{
             "coordX" : "${e.clientX + X_AXIS_COMPENSATION}",

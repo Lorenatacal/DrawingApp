@@ -27,26 +27,32 @@
     </head>
 
     <body>
-        <div>
-            <div class="container-fluid text-center">
-                <h1 class="title"> Picture Guessing Game </h1>
-            <p id="timer" align="right"></p>
-            <div>
-                <canvas id="canvas"></canvas>
-                <br />
-            </div>
+        <div ="grid-container">
+            <section id="main">
+                <div class="container-fluid text-center">
+                    <h1 class="title"> Picture Guessing Game </h1>
+                <p id="timer" align="right"></p>
+                <div>
+                    <div id="canvas-placeholder">
+                        <canvas id="canvas">
+                            Your browser is trash, or you haven't enabled javascript
+                        </canvas>
+                    </div>
+                    <br />
+                </div>
 
-            <div>
-                <input id="guess-entry" type="text" required placeholder="Enter your guess here">
-                <button id="submit-guess" onclick="isCorrectGuess()">Submit</button>
-                <p id="input-result"></p>
-            </div>
+                <div>
+                    <input id="guess-entry" type="text" required placeholder="Enter your guess here">
+                    <button id="submit-guess" onclick="isCorrectGuess()">Submit</button>
+                    <p id="input-result"></p>
+                </div>
+            </section>
 
-            <br>
-            <h5 id="guesses">Your Previous Guesses</h5>
-            <ul id="previous-guesses">
-            </ul>
-            <h5 id="winner"></h5>
+                <br>
+                <h5 id="guesses">Your Previous Guesses</h5>
+                <ul id="previous-guesses">
+                </ul>
+                <h5 id="winner"></h5>
         </div>
     </body>
 

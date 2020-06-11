@@ -1,59 +1,73 @@
-// canvas
-const Y_AXIS_COMPENSATION = - 85
-const X_AXIS_COMPENSATION = - 4
+/// canvas
+const Y_AXIS_COMPENSATION = - 460
+const X_AXIS_COMPENSATION = - 670
+
+window.addEventListener("load", () => {
+    const canvas = document.querySelector("#canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.height = 500;
+    canvas.width = 600;
+
+    let brush = true;
+    let drawing = false;
+    let shouldClearCanvas = false;
 
 
-var canvas;
-var ctx;
-var brush;
-var drawing;
-
-
-window.onload = () => {
-    canvas = document.querySelector("#canvas");
-    ctx = canvas.getContext("2d");
-    canvas.height = 400;
-    canvas.width = 500;
-    brush = true;
-    drawing = false;
-}
-
-
-function startPosition(e) {
-    drawing = true;
-    draw(e);
-}
-
-function endPosition() {
-    drawing = false;
-    ctx.beginPath();
-}
-
-function draw(e) {
-    if (!drawing) return;
-    if (brush) { // moved this up so that this could possibly also change stroke size when using the eraser?
-        ctx.strokeStyle = "black";
-    } else {
-        ctx.strokeStyle = "white";
+    function startPosition(e) {
+        drawing = true;
+        draw(e);
     }
-    ctx.lineWidth = 4;
-    ctx.lineCap = "round";
+    function endPosition() {
+        drawing = false;
+        ctx.beginPath();
+    }
+    function draw(e) {
+        if (!drawing) return;
 
-    //  x and y compensation constants are added to make brush placement more accurate
-    ctx.lineTo(e.coordX + X_AXIS_COMPENSATION, e.coordY + Y_AXIS_COMPENSATION);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(e.coordX + X_AXIS_COMPENSATION, e.coordY +  Y_AXIS_COMPENSATION);
-}
-function switchToErase() {
-    brush = false;
-}
-function switchToBrush() {
-    brush = true;
-}
-function clearAll() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-}
+        if (brush) { // moved this up so that this could possibly also change stroke size when using the eraser?
+            ctx.strokeStyle = "black"
+        } else {
+            ctx.strokeStyle = "white"
+        }
+        ctx.lineWidth = 2.5;
+        ctx.lineCap = "round";
+
+        // get position of the mouse on the canvas
+        var pos = getMousePos(e);
+
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+    }
+
+    function switchToErase() {
+        brush = false;
+    }
+
+    function switchToBrush() {
+        brush = true;
+    }
+
+    function clearAll() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        shouldClearCanvas = false;
+    }
+
+    function getMousePos(e) {
+        // rect is the area that an element occupies relative to the size of the view port
+        // we can get the exact coordinates of the mouse relative to the canvas itself by subtracting the canvas's area from the outer viewport area
+        // because we are always checking the canvas position relative to the rest of the viewport, it is much more accurate than using constant values
+        // to compensate for the offset
+        // this element method also takes into account the amount of scroll in a webpage!
+
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        };
+    }
+})
 
 
 // create a socket to listen to the coordinates sent by player one
