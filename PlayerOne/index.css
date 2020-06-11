@@ -97,13 +97,6 @@ body {
     margin-top: 13%;
 }
 
-#canvas {
-  /* border: 2px solid black; */
-  background-color: white;
-  display: block;
-  /* margin: auto; */
-}
-
 #canvas-controls {
   display: flex;
   flex-wrap: none;
@@ -174,7 +167,7 @@ h1:empty {
 }
 
 
-#placeholder {
+/* #placeholder {
   width:924px;
   height:599px;
   margin:0 auto;
@@ -182,7 +175,7 @@ h1:empty {
   background-color: white;
   display: flex;
   justify-content: center;
-}
+} */
 
 #canvas {
   position:relative;
