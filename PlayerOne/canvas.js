@@ -18,7 +18,6 @@ window.addEventListener("load", () => {
 
     function startPosition(e) {
         drawing = true;
-        draw(e);
     }
     function endPosition() {
         drawing = false;
@@ -32,15 +31,14 @@ window.addEventListener("load", () => {
         } else {
             ctx.strokeStyle = "white"
         }
-        ctx.lineWidth = 2.5;
+        ctx.lineWidth = 5;
         ctx.lineCap = "round";
 
         // get position of the mouse on the canvas
         var pos = getMousePos(e);
-
+        ctx.beginPath();
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
-        ctx.beginPath();
         ctx.moveTo(pos.x, pos.y);
     }
 
