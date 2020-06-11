@@ -1,6 +1,6 @@
 // canvas
-const Y_AXIS_COMPENSATION = - 290
-const X_AXIS_COMPENSATION = - 770
+const Y_AXIS_COMPENSATION = - 460
+const X_AXIS_COMPENSATION = - 670
 
 window.addEventListener("load", () => {
     const canvas = document.querySelector("#canvas");
@@ -32,7 +32,7 @@ window.addEventListener("load", () => {
         } else {
             ctx.strokeStyle = "white"
         }
-        ctx.lineWidth = 3.5;
+        ctx.lineWidth = 2.5;
         ctx.lineCap = "round";
 
         // get position of the mouse on the canvas
