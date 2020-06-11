@@ -7,6 +7,12 @@ body {
     background-attachment: fixed;
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(1fr, 3);
+  padding: 20px;
+}
+
 .container-fluid {
   max-width: 95%;
   margin-left: auto;
@@ -96,7 +102,9 @@ body {
   font-size: 2vw;
   line-height: 49px;
   color: #FFFFFF;
+  padding-left: 100px;
 }
+
 #input-result {
   position: absolute;
   left: 67%;
@@ -109,23 +117,34 @@ body {
   color: #FFFFFF;
 }
 
-/* #placeholder {
-  width:924px;
+#canvas-placeholder {
+  /* width:924px;
   height:599px;
   margin:0 auto;
   padding:14px 0 75px 14px;
-  background-color: white;
+  background-color: white; */
   display: flex;
   justify-content: center;
-} */
+}
 
 #canvas {
   position:relative;
-  top: 70px;
+  top: 60px;
   border:none;
   background-color:#FFF;
   overflow:hidden;
   /* cursor:crosshair; */
 }
+
+#timer {
+  color: white;
+  font-family: "Questrial", sans-serif;
+}
+
+/*
+#main {
+  display: flex;
+  justify-content: center;
+} */
 
 
