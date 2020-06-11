@@ -8,13 +8,10 @@ window.addEventListener("load", () => {
     canvas.height = 500;
     canvas.width = 600;
 
-    // canvas.addEventListener("resize", () => {
-
-    // })
-
     let brush = true;
     let drawing = false;
     let shouldClearCanvas = false;
+
 
     function startPosition(e) {
         drawing = true;
@@ -70,111 +67,46 @@ window.addEventListener("load", () => {
           y: e.clientY - rect.top
         };
     }
-
-    canvas.addEventListener("mousedown", (e) => {
-        // drawingConnection.send(`${INCOMING_DRAWING}{
-        //     "coordX" : "${e.clientX + X_AXIS_COMPENSATION}",
-        //     "coordY" : "${e.clientY + Y_AXIS_COMPENSATION}",
-        //     "isDrawing" : "${drawing}",
-        //     "isUsingBrush" : "${brush}",
-        //     "clearCanvas" : ${shouldClearCanvas},
-        //     "actionType" : "mousedown"
-        // }`);
-
-        startPosition(e);
-    });
-
-    canvas.addEventListener("mouseup", (e) => {
-        // drawingConnection.send(`${INCOMING_DRAWING}{
-        //     "coordX" : "${e.clientX + X_AXIS_COMPENSATION}",
-        //     "coordY" : "${e.clientY + Y_AXIS_COMPENSATION}",
-        //     "isDrawing" : "${drawing}",
-        //     "isUsingBrush" : "${brush}",
-        //     "clearCanvas" : "${shouldClearCanvas}",
-        //     "actionType" : "mouseup"
-        // }`);
-
-        endPosition()
-    });
-
-    canvas.addEventListener("mousemove", (e) => {
-        // drawingConnection.send(`${INCOMING_DRAWING}{
-        //     "coordX" : "${e.clientX + X_AXIS_COMPENSATION}",
-        //     "coordY" : "${e.clientY + Y_AXIS_COMPENSATION}",
-        //     "isDrawing" : "${drawing}",
-        //     "isUsingBrush" : "${brush}",
-        //     "clearCanvas" : "${shouldClearCanvas}",
-        //     "actionType" : "mousemove"
-        // }`);
-
-        draw(e);
-    });
-
-    erase.addEventListener("click", switchToErase);
-
-    pen.addEventListener("click", switchToBrush);
-    restart.addEventListener("click", () => {
-        shouldClearCanvas = true;
-        clearAll();
-    });
-
-  })
-
-    // url = "wss://dug7q.sse.codesandbox.io/";
-
-  //send drawing to player two
-//   console.log(url, 'url')
-//   const drawingConnection = new WebSocket(url + "draw");
-//   const INCOMING_DRAWING = "INCOMING DRAWING: ";
-
-//   drawingConnection.onopen = () => {
-//       console.log("Player's one drawing");
-//       drawingConnection.send('player one is ready to send drawing')
-//   }
-
-//   drawingConnection.onerror = err => {
-//       console.log(`Websocket error ${err}`)
-//   }
-
+})
 
 
 // create a socket to listen to the coordinates sent by player one
-// const drawConnection = new WebSocket(url + "draw");
-// const INCOMING_DRAWING = "INCOMING DRAWING: ";
+const drawConnection = new WebSocket(url + "draw");
+const INCOMING_DRAWING = "INCOMING DRAWING: ";
 
 
-// drawConnection.onopen = () => {
-//     drawConnection.send("I'm awake and waiting for a drawing");
-// };
+drawConnection.onopen = () => {
+    drawConnection.send("I'm awake and waiting for a drawing");
+};
 
-// drawConnection.onerror = (err) => {
-//     console.log(err);
-// };
+drawConnection.onerror = (err) => {
+    console.log(err);
+};
 
-// drawConnection.onmessage = (e) => {
-//     if(e.data.startsWith(INCOMING_DRAWING)) {
+drawConnection.onmessage = (e) => {
+    if(e.data.startsWith(INCOMING_DRAWING)) {
 
-//         let drawingAction = JSON.parse(e.data.replace(INCOMING_DRAWING, ""));
-//         // console.log(drawingAction);
+        let drawingAction = JSON.parse(e.data.replace(INCOMING_DRAWING, ""));
+        // console.log(drawingAction);
 
-//         // then we need to be able to handle starting, continuing, stopping drawing, changing brush and resetting the page
-//         // this switch statenment is used to copy the event listeners we use in player one
-//         switch(drawingAction.actionType){
-//             case "mousedown":
-//                 console.log('start drawing');
-//                 startPosition(drawingAction);
-//                 break;
-//             case "mousemove":
-//                 console.log('mouse move');
-//                 draw(drawingAction);
-//                 break;
-//             case "mouseup":
-//                 console.log("finish drawing");
-//                 endPosition(drawingAction);
-//             default:
-//                 console.log(drawingAction);
-//                 break;
-//         }
-//         // startPosition(e.data.replace(INCOMING_DRAWING, ""));
-//     }
-// };
+        // then we need to be able to handle starting, continuing, stopping drawing, changing brush and resetting the page
+        // this switch statenment is used to copy the event listeners we use in player one
+        switch(drawingAction.actionType){
+            case "mousedown":
+                console.log('start drawing');
+                startPosition(drawingAction);
+                break;
+            case "mousemove":
+                console.log('mouse move');
+                draw(drawingAction);
+                break;
+            case "mouseup":
+                console.log("finish drawing");
+                endPosition(drawingAction);
+            default:
+                console.log(drawingAction);
+                break;
+        }
+        // startPosition(e.data.replace(INCOMING_DRAWING, ""));
+    }
+};
