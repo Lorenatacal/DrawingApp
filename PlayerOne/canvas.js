@@ -36,10 +36,13 @@ window.addEventListener("load", () => {
 
         // get position of the mouse on the canvas
         var pos = getMousePos(e);
+
+        ctx.lineTo(pos.x, pos.y); // to join up the points made by the user when mouse is moving fast: a path is made from the last point made to the current position
+        ctx.stroke(); // fills in the path
         ctx.beginPath();
-        ctx.lineTo(pos.x, pos.y);
+        ctx.lineTo(pos.x, pos.y); //draw a point for the current position
         ctx.stroke();
-        ctx.moveTo(pos.x, pos.y);
+        ctx.moveTo(pos.x, pos.y); // canvas pointer moves to the current position, ready for the next point if the user continues drawing
     }
 
     function switchToErase() {
@@ -70,9 +73,10 @@ window.addEventListener("load", () => {
     }
 
     canvas.addEventListener("mousedown", (e) => {
+        let pos =  getMousePos(e);
         drawingConnection.send(`${INCOMING_DRAWING}{
-            "coordX" : "${e.clientX + X_AXIS_COMPENSATION}",
-            "coordY" : "${e.clientY + Y_AXIS_COMPENSATION}",
+            "coordX" : "${pos.x}",
+            "coordY" : "${pos.y}",
             "isDrawing" : "${drawing}",
             "isUsingBrush" : "${brush}",
             "clearCanvas" : ${shouldClearCanvas},
@@ -83,9 +87,10 @@ window.addEventListener("load", () => {
     });
 
     canvas.addEventListener("mouseup", (e) => {
+        let pos = getMousePos(e);
         drawingConnection.send(`${INCOMING_DRAWING}{
-            "coordX" : "${e.clientX + X_AXIS_COMPENSATION}",
-            "coordY" : "${e.clientY + Y_AXIS_COMPENSATION}",
+            "coordX" : "${pos.x}",
+            "coordY" : "${pos.y}",
             "isDrawing" : "${drawing}",
             "isUsingBrush" : "${brush}",
             "clearCanvas" : "${shouldClearCanvas}",
@@ -96,9 +101,10 @@ window.addEventListener("load", () => {
     });
 
     canvas.addEventListener("mousemove", (e) => {
+        let pos = getMousePos(e);
         drawingConnection.send(`${INCOMING_DRAWING}{
-            "coordX" : "${e.clientX + X_AXIS_COMPENSATION}",
-            "coordY" : "${e.clientY + Y_AXIS_COMPENSATION}",
+            "coordX" : "${pos.x}",
+            "coordY" : "${pos.y}",
             "isDrawing" : "${drawing}",
             "isUsingBrush" : "${brush}",
             "clearCanvas" : "${shouldClearCanvas}",
@@ -108,11 +114,48 @@ window.addEventListener("load", () => {
         draw(e);
     });
 
-    erase.addEventListener("click", switchToErase);
+    erase.addEventListener("click", (e) => {
+        let pos = getMousePos(e);
+        drawingConnection.send(`${INCOMING_DRAWING}{
+            "coordX" : "${pos.x}",
+            "coordY" : "${pos.y}",
+            "isDrawing" : "${drawing}",
+            "isUsingBrush" : "${brush}",
+            "clearCanvas" : "${shouldClearCanvas}",
+            "actionType" : "switcherase"
+        }`);
 
-    pen.addEventListener("click", switchToBrush);
-    restart.addEventListener("click", () => {
+        switchToErase();
+    });
+
+    pen.addEventListener("click", (e) => {
+        let pos = getMousePos(e);
+        drawingConnection.send(`${INCOMING_DRAWING}{
+            "coordX" : "${pos.x}",
+            "coordY" : "${pos.y}",
+            "isDrawing" : "${drawing}",
+            "isUsingBrush" : "${brush}",
+            "clearCanvas" : "${shouldClearCanvas}",
+            "actionType" : "switchbrush"
+        }`);
+
+        switchToBrush();
+    });
+
+
+    restart.addEventListener("click", (e) => {
         shouldClearCanvas = true;
+
+        let pos = getMousePos(e);
+        drawingConnection.send(`${INCOMING_DRAWING}{
+            "coordX" : "${pos.x}",
+            "coordY" : "${pos.y}",
+            "isDrawing" : "${drawing}",
+            "isUsingBrush" : "${brush}",
+            "clearCanvas" : "${shouldClearCanvas}",
+            "actionType" : "reset"
+        }`);
+
         clearAll();
     });
 
