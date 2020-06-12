@@ -31,12 +31,20 @@ window.addEventListener("load", () => {
         ctx.lineWidth = 5;
         ctx.lineCap = "round";
 
-        // get position of the mouse on the canvas
-
+        ctx.lineTo(x,y);  // the following two lines are the same as what has been dozne in player one
+        ctx.stroke();
         ctx.beginPath();
         ctx.lineTo(x,y);
         ctx.stroke();
         ctx.moveTo(x, y);
+    }
+
+    function switchToErase() {
+        brush = false;
+    }
+
+    function switchToBrush() {
+        brush = true;
     }
 
     function clearAll() {
@@ -78,6 +86,17 @@ window.addEventListener("load", () => {
                 case "mouseup":
                     console.log("finish drawing");
                     endPosition();
+                case "switcherase":
+                    console.log('switch to eraser');
+                    switchToErase();
+                    break;
+                case "switchbrush":
+                    console.log('switch to brush');
+                    switchToBrush();
+                    break;
+                case "reset":
+                    console.log('reset the canvas');
+                    clearAll();
                 default:
                     console.log(drawingAction);
                     break;
